@@ -71,8 +71,10 @@ def extract_7z(f,p):
 def main():
     if check_windows_version() == "64":
         link = "https://sourceforge.net/projects/mpv-player-windows/rss?path=/64bit"
+        url = "https://sourceforge.net/projects/mpv-player-windows/files/64bit/"
     elif check_windows_version() == "32":
         link = "https://sourceforge.net/projects/mpv-player-windows/rss?path=/32bit"
+        url = "https://sourceforge.net/projects/mpv-player-windows/files/32bit/"
     else:
         print("[*]unknown windows version")
         exit()
@@ -80,7 +82,7 @@ def main():
     f = load_xml()
     print("[*]Latest mpv version: " + f)
     print("[*]Downloading mpv")
-    url = "https://sourceforge.net/projects/mpv-player-windows/files/64bit/"+f+"/download"
+    url = url +f+"/download"
     #print(url)
     download_mpv(url,f)
     os.system("del data.xml")
