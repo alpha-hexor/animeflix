@@ -44,7 +44,8 @@ def stream_episode(name,ep_num,last_ep):
     link = get_final_link(embade_url)
     
     #stream episode
-    command = ' "'+link+'"'
+    
+    command = ' --referrer="https://gogoplay.io" "'+link+'"'
     os.system(mpv_executable+command)
 
     #for next episode
