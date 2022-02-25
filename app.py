@@ -8,6 +8,19 @@ from codebase.log import *
 from codebase.link_gen import *
 from codebase.parselog import *
 
+
+#sexy logo
+logo ='''
+\033[95m  ___          _                          ______  _  _       
+\033[95m / _ \        (_)                         |  ___|| |(_)      
+\033[95m/ /_\ \ _ __   _  _ __ ___    ___  ______ | |_   | | _ __  __
+\033[95m|  _  || '_ \ | || '_ ` _ \  / _ \|______||  _|  | || |\ \/ /
+\033[95m| | | || | | || || | | | | ||  __/        | |    | || | >  < 
+\033[95m\_| |_/|_| |_||_||_| |_| |_| \___|        \_|    |_||_|/_/\_\
+\033[0m                                                             
+'''                                                          
+
+
 #create download directory
 if not os.path.exists('downloads'):
     os.mkdir('downloads')
@@ -98,6 +111,8 @@ def download_episode(path,name,ep_num,last_ep):
 
 def main():
     if len(sys.argv) == 1:
+        clear()
+        print(logo)
         name = input("[*]Enter anime name: ")
         animes,anime_links =search_anime(name)
 
@@ -139,6 +154,8 @@ def main():
             '''
             --help implementation
             '''
+            clear()
+            print(logo)
             colored_print("[*]Usage: python app.py --help [for help]")
             colored_print("[*]Usage: python app.py [for normal usage]")
             colored_print("[*]Usage: python app.py --continue_stream [continue watch animes]")
@@ -152,7 +169,8 @@ def main():
             '''
             --continue_stream implementation
             '''
-
+            clear()
+            print(logo)
             #check for log file
             if not os.path.exists("watch_log.txt"):
                 colored_print("[*]No watch log found")
@@ -177,7 +195,8 @@ def main():
             '''
             --continue_download implementation
             '''
-            
+            clear()
+            print(logo)
             #check for log file
             if not os.path.exists("download_log.txt"):
                 colored_print("[*]No download log found")
