@@ -27,6 +27,7 @@ if not os.path.exists('downloads'):
 
 #set mpv executable
 mpv_executable = "mpv.exe" if os.name == "nt" else "mpv"
+ffmpeg_executable = "ffmpeg.exe" if os.name == "nt" else "ffmpeg"
 
 #clear screen function
 def clear():
@@ -96,7 +97,8 @@ def download_episode(path,name,ep_num,last_ep):
     # progress_bar.close()
     
     #download process with ffmpeg
-    
+    command = " -referrer=\"https://gogoplay.io\" -i "+link+" -c copy "+path+"\\"+name+"_"+ep_num+".mp4"
+    os.system(ffmpeg_executable+command)
 
     #for next episode
     if (int(ep_num) + 1 <= int(last_ep)):
