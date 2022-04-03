@@ -6,13 +6,14 @@ A python program to watch anime **educational purposes only**
 ## Windows Installation
 1. ``pip install -r requirements.txt``
 2. ``python windows_setup.py``
+3. ``ffmpeg.exe [for downloading]``
 
 ***
 
 ## For other OS
 1. ``pip install -r requirements.txt``
 2. Install mpv player with package manager
-
+3.``ffmpeg [for downloading]``
 ***
 
 ## Usage
