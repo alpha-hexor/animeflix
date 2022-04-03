@@ -84,16 +84,19 @@ def download_episode(path,name,ep_num,last_ep):
     link = get_final_link(embade_url)
 
     #download process
-    r=requests.get(link,headers={'referer':"https://gogoplay.io"},stream=True)
-    total_size_in_bytes= int(r.headers.get('content-length', 0))
-    block_size = 1024
-    progress_bar = tqdm(total=total_size_in_bytes, unit='iB', unit_scale=True)
-    with open(path+"\\"+name+"_"+ep_num+".mp4", 'wb') as f:
-        for data in r.iter_content(block_size):
-            progress_bar.update(len(data))
-            f.write(data)
-    f.close()
-    progress_bar.close()
+    # r=requests.get(link,headers={'referer':"https://gogoplay.io"},stream=True)
+    # total_size_in_bytes= int(r.headers.get('content-length', 0))
+    # block_size = 1024
+    # progress_bar = tqdm(total=total_size_in_bytes, unit='iB', unit_scale=True)
+    # with open(path+"\\"+name+"_"+ep_num+".mp4", 'wb') as f:
+    #     for data in r.iter_content(block_size):
+    #         progress_bar.update(len(data))
+    #         f.write(data)
+    # f.close()
+    # progress_bar.close()
+    
+    #download process with ffmpeg
+    
 
     #for next episode
     if (int(ep_num) + 1 <= int(last_ep)):
