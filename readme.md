@@ -13,7 +13,7 @@ A python program to watch anime **educational purposes only**
 ## For other OS
 1. ``pip install -r requirements.txt``
 2. Install mpv player with package manager
-3.``ffmpeg [for downloading]``
+3. ``ffmpeg [for downloading]``
 ***
 
 ## Usage
