@@ -97,7 +97,7 @@ def generate_links(url):
             b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10"
         )
     )
-    
+    #print(j)
     if j['source'][0]['type'] == "hls" or j['source'][0]['file'].split(".")[-1] == "m3u8":
         qualities,links = get_m3u8_quality(j['source'][0]['file'])
         return qualities,links
