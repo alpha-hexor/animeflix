@@ -13,6 +13,7 @@ headers = {"User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (K
 main_url = "https://gogoanime.fi/"
 
 s=b"93106165734640459728346589106791"
+s_2=b"97952160493714852094564712118349"
 iv= b"8244002440089157"
 
 
@@ -60,7 +61,7 @@ def decrypt(data):
     '''
     function to decrypt data
     '''
-    return AES.new(s, AES.MODE_CBC, iv=iv).decrypt(base64.b64decode(data))
+    return AES.new(s_2, AES.MODE_CBC, iv=iv).decrypt(base64.b64decode(data))
 
 def generate_links(url):
     '''
@@ -88,6 +89,7 @@ def generate_links(url):
         ajax_url,
         params={
             'id': encrypted_ajax.decode(),
+            'alias': p_url.query.get('id')
             
         },
         headers={'x-requested-with': 'XMLHttpRequest'}
