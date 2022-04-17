@@ -6,14 +6,17 @@ from Cryptodome.Cipher import AES
 import yarl
 from .m3u8 import *
 
+'''
+return radeen(atob($("#id")[curl(275)]()) + "" + jiri()).substring(0, 32);
+'''
+
 #huge help from animedl
 
 #some global things
 headers = {"User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"}
 main_url = "https://gogoanime.fi/"
 
-s=b"93106165734640459728346589106791"
-s_2=b"97952160493714852094564712118349"
+
 iv= b"2094564712118349"
 
 
@@ -57,11 +60,11 @@ def pad(data):
     return data + chr(len(data) % 16) * (16 - len(data) % 16)
 
 
-def decrypt(data):
+def decrypt(s,data):
     '''
     function to decrypt data
     '''
-    return AES.new(s_2, AES.MODE_CBC, iv=iv).decrypt(base64.b64decode(data))
+    return AES.new(s, AES.MODE_CBC, iv=iv).decrypt(base64.b64decode(data))
 
 def generate_links(url):
     '''
@@ -77,9 +80,14 @@ def generate_links(url):
     
     
     p_url = yarl.URL(url)
+    
+    #construct the key
+    key = (base64.b64decode(p_url.query.get('id'))+iv).hex()[:32].encode()
+    
+    
     ajax_url = "https://{}/encrypt-ajax.php".format(p_url.host)
     encrypted_ajax = base64.b64encode(
-        AES.new(s,AES.MODE_CBC,iv=iv).encrypt(
+        AES.new(key,AES.MODE_CBC,iv=iv).encrypt(
             pad(p_url.query.get('id')).encode()
         )
     )
@@ -96,7 +104,7 @@ def generate_links(url):
     )
 
     j = json.loads(
-        decrypt(r.json().get("data")).strip(
+        decrypt(key,r.json().get("data")).strip(
             b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10"
         )
     )
