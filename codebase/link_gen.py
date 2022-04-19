@@ -14,9 +14,9 @@ from .m3u8 import *
 headers = {"User-Agent" : "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"}
 main_url = "https://gogoanime.fi/"
 
-s=b'34541577475429958244002440089157'
-s_2 = b'20945647121183498244002440089157'
-iv= b'4968442212618524'
+s=b'37911490979715163134003223491201'
+s_2 = b'54674138327930866480207815084989'
+iv= b'3134003223491201'
 
 
 #pad_data="\x08\x0e\x03\x08\t\x03\x04\t"
