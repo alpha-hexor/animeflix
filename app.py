@@ -40,6 +40,10 @@ def update():
     with open("codebase/link_gen.py","wb") as f:
         f.write(r.content)
     f.close()
+    r=requests.get("https://raw.githubusercontent.com/alpha-hexor/animeflix/main/version.txt").text.strip("\n")
+    with open("version.txt","w") as f:
+        f.write(r)
+    f.close()
     
     colored_print("[*]Update is done, please restart the program")
     sys.exit()
