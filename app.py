@@ -1,3 +1,4 @@
+import requests
 import os
 from termcolor import colored
 from tqdm import tqdm
@@ -16,7 +17,7 @@ logo ='''
 \033[95m/ /_\ \ _ __   _  _ __ ___    ___  ______ | |_   | | _ __  __
 \033[95m|  _  || '_ \ | || '_ ` _ \  / _ \|______||  _|  | || |\ \/ /
 \033[95m| | | || | | || || | | | | ||  __/        | |    | || | >  < 
-\033[95m\_| |_/|_| |_||_||_| |_| |_| \___|        \_|    |_||_|/_/\_\
+\033[95m\_| |_/|_| |_||_||_| |_| |_| \___|        \_|    |_||_|/_/\_\\
 \033[0m                                                             
 '''                                                          
 
@@ -33,6 +34,26 @@ ffmpeg_executable = "ffmpeg.exe" if os.name == "nt" else "ffmpeg"
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+#fnction to do updates
+def update():
+    r=requests.get("https://raw.githubusercontent.com/alpha-hexor/animeflix/main/codebase/link_gen.py")
+    with open("codebase/link_gen.py","wb") as f:
+        f.write(r.content)
+    f.close()
+    
+    colored_print("[*]Update is done, please restart the program")
+    sys.exit()
+    
+#function to check for upate
+def check_update():
+    p=open("version.txt","r")
+    v=p.read()
+    r=requests.get("https://raw.githubusercontent.com/alpha-hexor/animeflix/main/version.txt").text.strip("\n")
+    if v!=r:
+        #update is required
+        update()
+ 
+    
 #write a function to print colored text
 def colored_print(message):
     colors = ['red','green','blue','yellow','magenta','cyan']
@@ -116,6 +137,7 @@ def download_episode(path,name,ep_num,last_ep):
 
 def main():
     if len(sys.argv) == 1:
+        check_update()
         clear()
         print(logo)
         name = input("[*]Enter anime name: ")
@@ -165,6 +187,7 @@ def main():
             colored_print("[*]Usage: python app.py [for normal usage]")
             colored_print("[*]Usage: python app.py --continue_stream [continue watch animes]")
             colored_print("[*]Usage: python app.py --continue_download [continue download animes]")
+            colored_print("[*]Usage: python app.py --update [update app]")
             
             exit()
         
@@ -174,6 +197,7 @@ def main():
             '''
             --continue_stream implementation
             '''
+            check_update()
             clear()
             print(logo)
             #check for log file
@@ -200,6 +224,7 @@ def main():
             '''
             --continue_download implementation
             '''
+            check_update()
             clear()
             print(logo)
             #check for log file
@@ -221,6 +246,9 @@ def main():
 
             download_log(anime_to_download,str(episode_to_download),anime_last[anime_to_download])
             download_episode(path,anime_to_download,str(episode_to_download),anime_last[anime_to_download])
+        
+        if sys.argv[1] == "--update":
+            update()
 
 
 if __name__ == "__main__":

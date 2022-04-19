@@ -1,3 +1,4 @@
+regex
 beautifulsoup4
 pycryptodomex
 requests

@@ -21,6 +21,7 @@ A python program to watch anime **educational purposes only**
 2. ``python app.py`` [for normal usage]
 3. ``python app.py --continue_stream`` [continue watch animes]
 4. ``python app.py --continue_download`` [continue download animes]
+5. ``python app.py --update`` [auto update the app]
 
 ***
 
