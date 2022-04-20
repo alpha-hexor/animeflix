@@ -36,21 +36,21 @@ def get_embade_link(name,ep_num):
     src = r.content
     soup = BeautifulSoup(src,'lxml')
 
-    for item in soup.find_all('a', attrs={'href':'#',"rel":"100",'data-video' : True}):
+    for item in soup.find_all('a', attrs={'href':'#',"rel":"1",'data-video' : True}):
         url = str(item['data-video'])
     url = "https:" + url
     return url
 
-# def get_crypto(url):
-#     '''
-#     function to get crypto data
-#     '''
-#     r=requests.get(url,headers=headers)
-#     src = r.content
-#     soup = BeautifulSoup(src,'lxml')
-#     for item in soup.find_all('script',attrs={'data-name':'crypto','data-value':True}):
-#         crypto = str(item['data-value'])
-#     return crypto
+def get_crypto(url):
+    '''
+    function to get crypto data
+    '''
+    r=requests.get(url,headers=headers)
+    src = r.content
+    soup = BeautifulSoup(src,'lxml')
+    for item in soup.find_all('script',attrs={'data-name':'episode','data-value':True}):
+        crypto = str(item['data-value'])
+    return crypto
     
 def pad(data):
     '''
@@ -59,11 +59,11 @@ def pad(data):
     return data + chr(len(data) % 16) * (16 - len(data) % 16)
 
 
-def decrypt(data):
+def decrypt(key,data):
     '''
     function to decrypt data
     '''
-    return AES.new(s_2, AES.MODE_CBC, iv=iv).decrypt(base64.b64decode(data))
+    return AES.new(key, AES.MODE_CBC, iv=iv).decrypt(base64.b64decode(data))
 
 def generate_links(url):
     '''
@@ -72,10 +72,10 @@ def generate_links(url):
     qualities = []
     links = []
 
-    # crypto_data=get_crypto(url)
+    crypto_data=get_crypto(url)
     # #get the decrypted crypto value
-    # decrypted_crypto = decrypt(crypto_data)
-    # new_id = decrypted_crypto[:decrypted_crypto.index(b"&")].decode()
+    decrypted_crypto = decrypt(s,crypto_data)
+    new_id = decrypted_crypto[decrypted_crypto.index(b"&"):].strip(b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10").decode()
     
     
     p_url = yarl.URL(url)
@@ -93,17 +93,13 @@ def generate_links(url):
 
     #send the request
     r =requests.get(
-        ajax_url,
-        params={
-            'id': encrypted_ajax.decode(),
-            'alias': p_url.query.get('id')
-            
-        },
+        f'{ajax_url}?id={encrypted_ajax.decode()}{new_id}&alias={p_url.query.get("id")}',
+        
         headers={'x-requested-with': 'XMLHttpRequest'}
     )
 
     j = json.loads(
-        decrypt(r.json().get("data")).strip(
+        decrypt(s_2,r.json().get("data")).strip(
             b"\x00\x01\x02\x03\x04\x05\x06\x07\x08\t\n\x0b\x0c\r\x0e\x0f\x10"
         )
     )
